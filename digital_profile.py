@@ -1,5 +1,5 @@
 # 1. หัวข้อใหญ่ : แนะนำตัวหลักและชื่อเจ้าของเว็บ
-st.title("✨My Digital Profile")
+st.title("✨my digital profile")
 
 # 2. หัวข้อย่อยที่ 1 : แนะนำตัว
 st.header("🧩แนะนำตัว")
