@@ -3,14 +3,14 @@ import streamlit as st
 
 st.title("⏱️ เกมเติมศัพท์จับเวลา")
 
-# 1. กำหนดค่าเริ่มต้นใน session_state ถ้ายังไม่มี
+# 1. กำหนดค่าเริ่มต้นใน session_state ถ้ายังไม่มี (แก้การเช็ค Key ซ้ำ)
 if "ans1_val" not in st.session_state:
     st.session_state.ans1_val = ""
 if "ans2_val" not in st.session_state:
     st.session_state.ans2_val = ""
-if "ans2_val" not in st.session_state:
+if "ans3_val" not in st.session_state:
     st.session_state.ans3_val = ""
-if "ans2_val" not in st.session_state:
+if "ans4_val" not in st.session_state:
     st.session_state.ans4_val = ""
 
 
@@ -25,12 +25,12 @@ def reset_game():
 
 
 # ----------------------------------------------------
-# 📌 ฟังก์ชัน MessageBox (Dialog)
+# 📌 ฟังก์ชัน MessageBox (Dialog) - เพิ่มพารามิเตอร์ให้ครบ 4 ตัว
 # ----------------------------------------------------
 @st.dialog("📊 สรุปผลการเล่นเกม")
-def show_result_dialog(ans1, ans2):
+def show_result_dialog(ans1, ans2, ans3, ans4):
     st.balloons()
-  
+
     score = 0
     u_ans1 = ans1.strip().lower()
     u_ans2 = ans2.strip().lower()
@@ -51,15 +51,15 @@ def show_result_dialog(ans1, ans2):
     else:
         st.error(f"❌ ข้อ 2: ยังไม่ถูกต้อง (คุณตอบ '{u_ans2}')")
 
-    # ตรวจข้อ 3
-    if u_ans3 == "Banana":
+    # ตรวจข้อ 3 (แก้เป็นตัวพิมพ์เล็กตาม .lower())
+    if u_ans3 == "banana":
         st.success("✅ ข้อ 3: ถูกต้อง")
         score += 1
     else:
         st.error(f"❌ ข้อ 3: ยังไม่ถูกต้อง (คุณตอบ '{u_ans3}')")
-        
-    # ตรวจข้อ 4
-    if u_ans4 == "Avocado":
+
+    # ตรวจข้อ 4 (แก้เป็นตัวพิมพ์เล็กตาม .lower())
+    if u_ans4 == "avocado":
         st.success("✅ ข้อ 4: ถูกต้อง")
         score += 1
     else:
@@ -89,7 +89,7 @@ if "start" in st.session_state and not st.session_state.get("is_ended", False):
 
 st.divider()
 
-# 3. ช่องรับคำตอบ (ใช้ value ผูกกับตัวแปรตรงๆ เพื่อสั่งเคลียร์ได้)
+# 3. ช่องรับคำตอบ
 ans1 = st.text_input(
     "ข้อ 1: An `a _ _ l e` a day keeps the doctor away. 🍎",
     value=st.session_state.ans1_val,
@@ -99,36 +99,31 @@ ans2 = st.text_input(
     value=st.session_state.ans2_val,
 )
 ans3 = st.text_input(
-    "ข้อ 3: Cats love to eat `B _ n _ n _`. 🍌",
+    "ข้อ 3: Monkeys love to eat `b _ n _ n _`. 🍌",
     value=st.session_state.ans3_val,
 )
 ans4 = st.text_input(
-    "ข้อ 4: Cats love to eat `A _ v _ c _ _ o`. 🥑",
+    "ข้อ 4: Good fat comes from `a _ v _ c _ d _`. 🥑",
     value=st.session_state.ans4_val,
 )
 
-# อัปเดตค่าล่าสุดเข้าตัวแปร
+# อัปเดตค่าล่าสุดเข้าตัวแปร session_state
 st.session_state.ans1_val = ans1
 st.session_state.ans2_val = ans2
 st.session_state.ans3_val = ans3
 st.session_state.ans4_val = ans4
 
-# ✏️ [พื้นที่สำหรับนักเรียน]: เพิ่มข้อ 3, 4 ตรงนี้
 
-
-# 4. ปุ่มส่งคำตอบ
+# 4. ปุ่มส่งคำตอบและการนับเวลาถอยหลังอัตโนมัติ
 if "start" in st.session_state and not st.session_state.get("is_ended", False):
     if st.button("📥 ส่งคำตอบ"):
         st.session_state.is_ended = True
         st.rerun()
 
+    # ย้ายการรีเฟรช 1 วินาทีมาไว้เฉพาะตอนที่เริ่มเกมแล้วเท่านั้น
     time.sleep(1)
     st.rerun()
 
 # 5. แสดง Dialog ผลลัพธ์
 if st.session_state.get("is_ended", False):
     show_result_dialog(ans1, ans2, ans3, ans4)
-
-st.divider()
-st.write("นางสาวพัฒนการณ์ คำทอน เลขที่ 34 ม.4/7")
-
