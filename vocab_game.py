@@ -100,5 +100,5 @@ if st.session_state.get("is_ended", False):
     show_result_dialog(ans1, ans2)
 
 st.divider()
-st.write("นางสาวพัฒนการร์ คำทอน เลขที่ 34 ม.4/7")
+st.write("นางสาวพัฒนการณ์ คำทอน เลขที่ 34 ม.4/7")
 
