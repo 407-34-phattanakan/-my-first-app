@@ -103,7 +103,7 @@ ans3 = st.text_input(
     value=st.session_state.ans3_val,
 )
 ans4 = st.text_input(
-    "ข้อ 4: Good fat comes from `a _ v _ c _ d _`. 🥑",
+    "ข้อ 4: Good fat comes from `av _ c _ d _`. 🥑",
     value=st.session_state.ans4_val,
 )
 
